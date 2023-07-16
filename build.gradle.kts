@@ -5,10 +5,11 @@ plugins {
     kotlin("jvm") version "1.8.0"
     application
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.22"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "moe.fuqiuluo"
-version = "1.1.4"
+version = "1.1.5"
 
 repositories {
     mavenCentral()
@@ -53,8 +54,6 @@ distributions {
         }
     }
 }
-
-
 
 
 tasks {
