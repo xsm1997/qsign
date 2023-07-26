@@ -41,11 +41,9 @@ fun main(args: Array<String>) {
         ) {
             error("The base path is invalid, perhaps it is not a directory or something is missing inside.")
         } else {
-            Json {
-                ignoreUnknownKeys = true
-            }
+            val json = Json { ignoreUnknownKeys = true }
             FEBound.initAssertConfig(baseDir)
-            CONFIG = Json.decodeFromString<QSignConfig>(baseDir.resolve("config.json").readText())
+            CONFIG = json.decodeFromString<QSignConfig>(baseDir.resolve("config.json").readText())
                 .apply { checkIllegal() }
         }
     }
@@ -61,6 +59,7 @@ fun Application.init() {
         json(Json {
             prettyPrint = true
             isLenient = true
+            ignoreUnknownKeys = true
         })
     }
     install(StatusPages) {

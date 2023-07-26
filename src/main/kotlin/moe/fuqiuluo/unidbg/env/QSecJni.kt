@@ -2,6 +2,7 @@
 
 package moe.fuqiuluo.unidbg.env
 
+import CONFIG
 import com.github.unidbg.linux.android.dvm.*
 import com.github.unidbg.linux.android.dvm.array.ArrayObject
 import com.tencent.mobileqq.channel.SsoPacket
@@ -132,6 +133,16 @@ class QSecJni(
             return (dvmObject.value as String).hashCode()
         }
         return super.callIntMethodV(vm, dvmObject, signature, vaList)
+    }
+
+    override fun acceptMethod(dvmClass: DvmClass, signature: String, isStatic: Boolean): Boolean {
+        if (CONFIG.unidbg.debug) {
+            println("Accept ${ if (isStatic) "static" else "" } ${dvmClass.className}.$signature")
+        }
+        if (signature == "com/tencent/mobileqq/qsec/qsecest/QsecEst->p(Landroid/content/Context;I)Ljava/lang/String;") {
+            return false
+        }
+        return super.acceptMethod(dvmClass, signature, isStatic)
     }
 
     override fun callStaticObjectMethodV(
